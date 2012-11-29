@@ -2,7 +2,22 @@
 (function() {
   var sandbox;
 
-  sandbox = {};
+  sandbox = function(options) {
+    var css, html, iframe, js;
+    if (options == null) {
+      options = {};
+    }
+    options = $.extend(options, {
+      html: '',
+      css: '',
+      js: '',
+      stopAlerts: true,
+      onLog: (function() {})
+    });
+    js = options.js, html = options.html, css = options.css;
+    iframe = document.createElement('iframe');
+    return iframe.contentDocument.write("<html>\n  <head>\n    <style>" + css + "</style>\n    <script>" + js + "</script>\n  </head>\n  <body>" + html + "</body>\n</html>\n");
+  };
 
   if (typeof window !== "undefined" && window !== null) {
     window.sandbox = sandbox;
