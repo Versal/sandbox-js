@@ -1,0 +1,22 @@
+{
+  "name": "Sandbox.js",
+  "description": "Run HTML, CSS, and JS in a sandboxed environment",
+  "version": "0.1.0",
+  "author": {
+    "name": "Nick Cammarata"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/versal/sandbox-js.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt"
+    }
+  ],
+  "dependencies": {
+    "grunt": "~0.3.17",
+    "grunt-contrib-coffee": "~0.3.2"
+  }
+}

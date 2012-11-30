@@ -19,7 +19,7 @@
     stopDialogs = "var dialogs = ['alert', 'prompt', 'confirm']; for (var i = 0; i < dialogs.length; i++) window[dialogs[i]] = function() {};";
     scripts = [js];
     if (!options.dialogs) {
-      scripts = [stopDialogs, scripts];
+      scripts = [stopDialogs].concat(scripts);
     }
     allScripts = ((function() {
       var _i, _len, _results;
