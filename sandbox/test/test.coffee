@@ -1,40 +1,33 @@
-require './should'
-require 'jquery'
-sandbox = require '../sandbox'
-
 describe 'sandbox', ->
-  it 'exists', -> sandbox.should.exist
+  it 'Exists', -> expect(sandbox).to.exist
 
-  it 'html', ->
+  it 'HTML', ->
     el = sandbox { html: '<p>test</p>' }
 
-    $(el.contentDocument).find('p').text().should.eql 'test'
+    expect($(el.contentDocument.body).find('p').text()).to.be 'test'
 
-  it 'css', ->
-    el = sandbox { css: 'body { background-color: #333; }', html: '<p>test</p>' }
+  it 'CSS', ->
+    el = sandbox { css: 'body { background-color: rgb(50, 50, 50); }', html: '<p>test</p>' }
 
-    $(el.contentDocument).find('body').css('background-color').should.eql '#333'
+    expect($(el.contentDocument.body).css('background-color')).to.be 'rgb(50, 50, 50)'
 
-  it 'js', ->
-    el = sandbox { html: '<p>test</p>', js: 'window.foo = 5' }
+  it 'Access global variables inside frame', ->
+    el = sandbox { html: '<p>testing yay</p>', js: 'window.yay = 5' }
 
-    el.contentWindow.foo.should.eql 5
+    expect(el.contentWindow.yay).to.be 5
 
   it 'executes parent js', (async) ->
-    el = sandbox { html: '<p>test</p>', js: 'parent.jsCallback()' }
     window.jsCallback = async
+    el = sandbox { html: '<p>test</p>', js: 'parent.jsCallback()' }
 
   it 'harnesses alerts', ->
-    noAlerts = sandbox { stopAlerts: true }
-    alerts = sandbox { stopAlerts: false }
+    noDialogs = sandbox { dialogs: false }
+    dialogs = sandbox { dialogs: true }
     for annoying in ['alert', 'prompt', 'confirm']
-      noAlerts.contentWindow[annoying].toString().should.eql 'function () {}'
-      alerts.contentWindow[annoying].toString().shouldnt.eql 'function () {}'
+      expect(noDialogs.contentWindow[annoying].toString()).to.be 'function () {}'
+      expect(dialogs.contentWindow[annoying].toString()).to.not.be 'function () {}'
 
-  it 'harnesses consoles', (async) ->
-    sandbox {
-      onLog: (say) ->
-        async() if say is 'hi'
-
-      js: 'console.log("hi");'
-    }
+  it 'appends to el', ->
+    el = $('div').appendTo('body')
+    sandbox { html: '<p>test</p>', el }
+    expect(el.find('iframe').length).to.be 1

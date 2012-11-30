@@ -1,25 +1,31 @@
-sandbox = (options = {}) ->
-  options = $.extend options, {
+window.sandbox = (options = {}) ->
+  options = $.extend {}, {
     html: '', css: '', js: ''
-    stopAlerts: true
+    dialogs: true
     onLog: (->)
-  }
+  }, options
 
   { js, html, css } = options
 
-  iframe = document.createElement 'iframe'
-  iframe.contentDocument.write """
-    <html>
-      <head>
-        <style>#{css}</style>
-        <script>#{js}</script>
-      </head>
-      <body>#{html}</body>
-    </html>
+  iframe = $('<iframe seamless sandbox="allow-scripts allow-forms allow-top-navigation allow-same-origin">').appendTo(options.el || 'body')[0]
+  doc = iframe.contentDocument || iframe.contentWindow.document
 
+  stopDialogs = "var dialogs = ['alert', 'prompt', 'confirm']; for (var i = 0; i < dialogs.length; i++) window[dialogs[i]] = function() {};"
+
+  scripts = [js]
+
+  unless options.dialogs
+    scripts = [stopDialogs, scripts]
+
+  allScripts = ("(function() { #{script} })();" for script in scripts).join ''
+
+
+  doc.open()
+  doc.write """
+    #{html}
+    <script>#{allScripts}</script>
+    <style>#{css}</style>
   """
+  doc.close()
 
-if window?
-  window.sandbox = sandbox
-if module?
-  module.exports = sandbox
+  return iframe
