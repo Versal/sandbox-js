@@ -15,7 +15,7 @@ window.sandbox = (options = {}) ->
   scripts = [js]
 
   unless options.dialogs
-    scripts = [stopDialogs, scripts]
+    scripts = [stopDialogs].concat scripts
 
   allScripts = ("(function() { #{script} })();" for script in scripts).join ''
 
