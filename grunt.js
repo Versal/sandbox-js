@@ -1,11 +1,15 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
-    watch: { tasks: 'coffee' },
+    watch: { 
+      files: ['**/*.coffee', '**/*.html'],
+      tasks: 'coffee' 
+    },
     coffee: {
       compile: {
         files: {
-          'build/sandbox.js': ['sandbox.coffee']
+          'build/sandbox.js': ['sandbox.coffee'],
+          'build/test.js': ['test/test.coffee']
         }
       }
     }
