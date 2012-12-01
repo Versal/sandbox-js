@@ -8,13 +8,13 @@ Sandbox.js is a tiny library that runs code in a sandboxed environment, by stick
 // Options passed as the first argument to sandbox. Defaults are listed.
 {
   // iframe html
-  html: ''
+  html: '',
   // iframe css
-  css: : ''
+  css: : '',
   // iframe js
-  js: ''
+  js: '',
   // whether to allow dialogs such as alert/confirm/prompts
-  dialogs: true
+  dialogs: true,
   // array of external js libraries ie. jQuery
   externalJS: [],
   // array of external js libraries ie. Bootstrap
