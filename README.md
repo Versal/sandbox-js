@@ -27,4 +27,4 @@ Sandbox.js is a tiny library that runs code in a sandboxed environment, by stick
 ## Coming soon
 
 Detection of errors in scripts that run, useful for online IDEs.
-Nice callback system to avoid global callback hell.
+Nice callback system to avoid global iframe callback hell.
