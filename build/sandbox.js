@@ -54,7 +54,7 @@
       return _results;
     })();
     doc.open();
-    doc.write("" + html + "\n" + externalJS + "\n" + externalCSS + "\n<script>" + allScripts + "</script>\n<style>" + css + "</style>");
+    doc.write("" + html + "\n" + (externalJS.join('')) + "\n" + (externalCSS.join('')) + "\n<script>" + allScripts + "</script>\n<style>" + css + "</style>");
     doc.close();
     return iframe;
   };
