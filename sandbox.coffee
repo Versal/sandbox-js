@@ -28,8 +28,8 @@ window.sandbox = (options = {}) ->
   doc.open()
   doc.write """
     #{html}
-    #{externalJS}
-    #{externalCSS}
+    #{externalJS.join ''}
+    #{externalCSS.join ''}
     <script>#{allScripts}</script>
     <style>#{css}</style>
   """
